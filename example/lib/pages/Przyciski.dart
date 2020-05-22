@@ -61,7 +61,7 @@ class Przyciski extends StatelessWidget {
                 addFlag = !addFlag;
                 removeFlag = false;
               },
-              child: Icon(Icons.zoom_in),
+              child: Icon(Icons.add_circle),
             ),
           ),
           Padding(
@@ -73,7 +73,7 @@ class Przyciski extends StatelessWidget {
                 removeFlag = !removeFlag;
                 addFlag = false;
               },
-              child: Icon(Icons.zoom_out),
+              child: Icon(Icons.delete_forever),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
 
 import '../widgets/drawer.dart';
@@ -16,6 +17,16 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   List<LatLng> tappedPoints = [];
+  double zoom = 3.0;
+  double maxZoom = 8.0;
+  double minZoom = 1.0;
+  MapController mapController;
+
+  @override
+  void initState() {
+    super.initState();
+    mapController = MapController();
+  }
 
   //TODO: zmienna ze wszystkimi markerami
   @override
@@ -55,10 +66,13 @@ class HomePageState extends State<HomePage> {
           children: [
             Flexible(
               child: FlutterMap(
+                mapController: mapController,
                 options: MapOptions(
                   center: LatLng(51.5, -0.09),
-                  zoom: 5.0,
-                  onTap: _handleTap,
+                  zoom: zoom,
+                  maxZoom: maxZoom,
+                  minZoom: minZoom,
+                  onTap: (latlng) => _handleTap(latlng,mapController.zoom),
                   plugins: [
                     PrzyciskiPlugin(),
                   ],
@@ -86,7 +100,7 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
-  void _handleTap(LatLng latlng) {
+  void _handleTap(LatLng latlng,double zoom) {
     if (Przyciski.addFlag == true) {
       setState(() {
         tappedPoints.add(latlng);
@@ -94,7 +108,9 @@ class HomePageState extends State<HomePage> {
     }
     if (Przyciski.removeFlag == true) {
       setState(() {
-        var kolko = Circle(latlng,1200);
+        print(zoom);
+        var promien = (maxZoom - zoom)*30000;
+        var kolko = Circle(latlng,promien);
         for (var boint in tappedPoints){
           if (kolko.isPointInside(boint)) {
             tappedPoints.remove(boint);
