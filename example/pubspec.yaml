@@ -2,11 +2,16 @@ name: flutter_map_example
 description: A new Flutter project.
 
 dependencies:
+  shared_preferences: ^0.5.2
+  share: ^0.6.1+1
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.0
   flutter_map:
 path: ../
+
+
+
 
 dev_dependencies:
   flutter_test:
