@@ -52,7 +52,11 @@ class HomePageState extends State<HomePage> {
         height: 80.0,
         point: latlng,
         builder: (ctx) => Container(
-          child: FlutterLogo(),
+          child: Icon(
+            Icons.room,
+            color: Colors.green,
+            size: 30.0,
+          ),
         ),
       );
     }).toList();
@@ -101,12 +105,15 @@ class HomePageState extends State<HomePage> {
     );
   }
   void _handleTap(LatLng latlng,double zoom) {
+    // dodawanko
     if (Przyciski.addFlag == true) {
       setState(() {
         tappedPoints.add(latlng);
+        Przyciski.addFlag = false;
       });
     }
-    if (Przyciski.removeFlag == true) {
+    // usuwanko
+    else if (Przyciski.removeFlag == true) {
       setState(() {
         print(zoom);
         var promien = (maxZoom - zoom)*30000;
@@ -114,11 +121,16 @@ class HomePageState extends State<HomePage> {
         for (var boint in tappedPoints){
           if (kolko.isPointInside(boint)) {
             tappedPoints.remove(boint);
+            Przyciski.removeFlag = false;
             break;
           }
         }
 
       });
     }
+
+    else {
+
     }
   }
+}

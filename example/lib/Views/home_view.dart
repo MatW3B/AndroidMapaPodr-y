@@ -4,6 +4,7 @@ import 'package:share/share.dart';
 import '../Utils/db_halper.dart';
 import '../Utils/theme_bloc.dart';
 import '../Views/add_note_view.dart';
+import '../widgets/drawer.dart';
 
 
 final routeObserver = RouteObserver<PageRoute>();
@@ -11,6 +12,7 @@ final duration = const Duration(milliseconds: 300);
 
 class HomeView extends StatefulWidget {
   final bool darkThemeEnabled;
+  static const String route = 'home_view';
   HomeView(this.darkThemeEnabled);
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -52,6 +54,7 @@ class _HomeViewState extends State<HomeView> with RouteAware {
   Widget build(BuildContext context) {
     databaseHelper.initlizeDatabase();
     return Scaffold(
+      drawer: buildDrawer(context, HomeView.route),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(

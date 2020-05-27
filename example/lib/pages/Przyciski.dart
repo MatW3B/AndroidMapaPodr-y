@@ -6,9 +6,11 @@ class PrzyciskiOption extends LayerOptions {
   final bool mini;
   final double padding;
   final Alignment alignment;
+  Color color;
 
   PrzyciskiOption(
       {
+        this.color = Colors.blueAccent,
         this.mini = true,
         this.padding = 2.0,
         this.alignment = Alignment.topRight});
@@ -61,7 +63,8 @@ class Przyciski extends StatelessWidget {
                 addFlag = !addFlag;
                 removeFlag = false;
               },
-              child: Icon(Icons.add_circle),
+              child: Icon(Icons.add_circle,
+              color:zoomButtonsOpts.color),
             ),
           ),
           Padding(
@@ -73,7 +76,8 @@ class Przyciski extends StatelessWidget {
                 removeFlag = !removeFlag;
                 addFlag = false;
               },
-              child: Icon(Icons.delete_forever),
+              child: Icon(Icons.delete_forever,
+              color: zoomButtonsOpts.color),
             ),
           ),
         ],
