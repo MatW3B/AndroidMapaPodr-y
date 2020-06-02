@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import '../Classes/note.dart';
 import '../Utils/db_halper.dart';
+import '../pages/home.dart';
 
 
 class AddNote extends StatefulWidget {
@@ -127,6 +128,7 @@ class _AddNoteState extends State<AddNote> {
   _saveNote() {
     if (_checkNotNull() == true) {
       if (widget.note != null) {
+        widget.note.pin = tappedPoints[-1];
         widget.note.title = _titleControllor.text;
         widget.note.note = _noteControllor.text;
         helper.updateNote(widget.note);

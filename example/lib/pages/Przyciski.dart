@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_example/Views/add_note_view.dart';
 
 class PrzyciskiOption extends LayerOptions {
   final bool mini;
@@ -38,6 +39,7 @@ class Przyciski extends StatelessWidget {
   final MapState map;
   final Stream<Null> stream;
   static bool addFlag = false;
+  static bool addNote = false;
   static bool removeFlag = false;
   final FitBoundsOptions options =
   const FitBoundsOptions(padding: EdgeInsets.all(12.0));
@@ -57,11 +59,12 @@ class Przyciski extends StatelessWidget {
                 top: zoomButtonsOpts.padding,
                 right: zoomButtonsOpts.padding),
             child: FloatingActionButton(
-              heroTag: 'zoomInButton',
+              heroTag: 'AddButton',
               mini: zoomButtonsOpts.mini,
               onPressed:(){
                 addFlag = !addFlag;
                 removeFlag = false;
+                addNote= false;
               },
               child: Icon(Icons.add_circle,
               color:zoomButtonsOpts.color),
@@ -70,14 +73,29 @@ class Przyciski extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(zoomButtonsOpts.padding),
             child: FloatingActionButton(
-              heroTag: 'zoomOutButton',
+              heroTag: 'RemoveButton',
               mini: zoomButtonsOpts.mini,
               onPressed: () {
                 removeFlag = !removeFlag;
                 addFlag = false;
+                addNote = false;
               },
               child: Icon(Icons.delete_forever,
               color: zoomButtonsOpts.color),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(zoomButtonsOpts.padding),
+            child: FloatingActionButton(
+              heroTag: 'AddNoteButton',
+              mini: zoomButtonsOpts.mini,
+              onPressed: () {
+                addNote = !addNote;
+                addFlag = false;
+                removeFlag = false;
+              },
+              child: Icon(Icons.note_add,
+                  color: zoomButtonsOpts.color),
             ),
           ),
         ],

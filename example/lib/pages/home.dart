@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_example/Views/home_view.dart';
 import 'package:latlong/latlong.dart';
-
+import '../Views/add_note_view.dart';
 import '../widgets/drawer.dart';
+import '../Utils/db_halper.dart';
 import 'Przyciski.dart';
+
+final DatabaseHelper helper = DatabaseHelper();
 
 class HomePage extends StatefulWidget {
   static const String route = '/';
@@ -14,9 +18,8 @@ class HomePage extends StatefulWidget {
     return HomePageState();
   }
 }
-
+final List<LatLng> tappedPoints = [];
 class HomePageState extends State<HomePage> {
-  List<LatLng> tappedPoints = [];
   double zoom = 3.0;
   double maxZoom = 8.0;
   double minZoom = 1.0;
@@ -45,6 +48,7 @@ class HomePageState extends State<HomePage> {
       ),
     ];
     */
+    var _list = helper.pin;
 
     var markers = tappedPoints.map((latlng) {
       return Marker(
@@ -52,13 +56,24 @@ class HomePageState extends State<HomePage> {
         height: 80.0,
         point: latlng,
         builder: (ctx) => Container(
-          child: Icon(
-            Icons.room,
-            color: Colors.green,
-            size: 30.0,
-          ),
-        ),
-      );
+
+          child: GestureDetector(
+            onDoubleTap:(){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddNote( ),
+                  ));
+            },
+
+              child: Icon(
+                Icons.room,
+                color: Colors.green,
+                size: 30.0,
+
+              )
+          )
+
+       ));
     }).toList();
 
     return Scaffold(
@@ -122,6 +137,24 @@ class HomePageState extends State<HomePage> {
           if (kolko.isPointInside(boint)) {
             tappedPoints.remove(boint);
             Przyciski.removeFlag = false;
+            break;
+          }
+        }
+
+      });
+    }
+    else if (Przyciski.addNote == true) {
+      setState(() {
+        print(zoom);
+        var promien = (maxZoom - zoom)*30000;
+        var kolko = Circle(latlng,promien);
+        for (var boint in tappedPoints){
+          if (kolko.isPointInside(boint)) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  AddNote()),
+            );
+            Przyciski.addNote = false;
             break;
           }
         }

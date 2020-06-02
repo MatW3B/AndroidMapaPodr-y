@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
+import './Views/home_view.dart';
 import './pages/home.dart';
 import './pages/overlay_image.dart';
 
-import './Views/home_view.dart';
+
 
 void main() => runApp(MyApp());
 
