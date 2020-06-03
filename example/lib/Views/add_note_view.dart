@@ -128,13 +128,14 @@ class _AddNoteState extends State<AddNote> {
   _saveNote() {
     if (_checkNotNull() == true) {
       if (widget.note != null) {
-        widget.note.pin = tappedPoints[-1];
+        widget.note.pinlat = tappedPoints[tappedPoints.length -1].latitude;
+        widget.note.pinlong = tappedPoints[tappedPoints.length -1].longitude;
         widget.note.title = _titleControllor.text;
         widget.note.note = _noteControllor.text;
         helper.updateNote(widget.note);
       } else {
         Note note =
-            Note(title: _titleControllor.text, note: _noteControllor.text);
+            Note(title: _titleControllor.text, note: _noteControllor.text, pinlat:tappedPoints[tappedPoints.length -1].latitude ,pinlong:tappedPoints[tappedPoints.length -1].longitude );
         helper.insertNote(note);
       }
       Navigator.pop(context);

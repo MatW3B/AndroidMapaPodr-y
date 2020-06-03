@@ -8,7 +8,8 @@ import '../Classes/note.dart';
 class DatabaseHelper {
   String tableName = 'TableNotes';
   String id = 'ID';
-  String pin = 'Pin';
+  String pinlat = 'pinlat';
+  String pinlong = 'pinlong';
   String title = 'Title';
   String desc = 'Description';
   static DatabaseHelper databaseHelper;
@@ -20,7 +21,6 @@ class DatabaseHelper {
     }
     return databaseHelper;
   }
-
   Future<Database> get database async {
     if (_database == null) {
       _database = await initlizeDatabase();
@@ -38,7 +38,7 @@ class DatabaseHelper {
 
   void _createDB(Database db, int newVesrion) async {
     await db.execute(
-        'CREATE TABLE $tableName($id INTEGER PRIMARY KEY AUTOINCREMENT, $title TEXT, $desc TEXT, $pin TEXT)');
+        'CREATE TABLE $tableName($id INTEGER PRIMARY KEY AUTOINCREMENT, $title TEXT, $desc TEXT, $pinlat REAL, $pinlong REAL)');
   }
 
   Future<List<Map<String, dynamic>>> getNoteMapList() async {
@@ -55,7 +55,8 @@ class DatabaseHelper {
     for (int i = 0; i < count; i++) {
       Note note = Note(
           id: noteMapList[i]['ID'],
-          pin: noteMapList[i]['Pin'],
+          pinlat: noteMapList[i]['pinlat'],
+          pinlong: noteMapList[i]['pinlong'],
           title: noteMapList[i]['Title'],
           note: noteMapList[i]['Description']);
       noteList.add(note);
